@@ -85,9 +85,9 @@ public class PullToZoomListView extends ListView implements AbsListView.OnScroll
             if (headViewResId > 0) {
                 mHeaderView = mLayoutInflater.inflate(headViewResId, null, false);
                 mHeaderContainer.addView(mHeaderView);
-                isHideHeader = true;
-            } else {
                 isHideHeader = false;
+            } else {
+                isHideHeader = true;
             }
 
             isParallax = a.getBoolean(R.styleable.PullToZoomListView_isHeadParallax, true);
@@ -127,6 +127,10 @@ public class PullToZoomListView extends ListView implements AbsListView.OnScroll
 
     public View getHeaderView() {
         return mHeaderView;
+    }
+
+    public boolean isHideHeader() {
+        return isHideHeader;
     }
 
     public void showHeadView() {
@@ -174,7 +178,7 @@ public class PullToZoomListView extends ListView implements AbsListView.OnScroll
     @Override
     public void onScroll(AbsListView paramAbsListView, int paramInt1, int paramInt2, int paramInt3) {
         Log.d(TAG, "onScroll");
-        if (mHeaderView != null) {
+        if (mHeaderView != null && !isHideHeader) {
             float f = mHeaderHeight - mHeaderContainer.getBottom();
             Log.d(TAG, "f|" + f);
             if (isParallax) {

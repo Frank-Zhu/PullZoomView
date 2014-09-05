@@ -162,6 +162,18 @@ public class PullToZoomScrollView extends ScrollView {
         }
     }
 
+    public void showHeaderView() {
+        if (mZoomView != null || mHeadView != null) {
+            mRootContainer.addView(mHeaderContainer, 0);
+        }
+    }
+
+    public void hideHeaderView() {
+        if (mZoomView != null || mHeadView != null) {
+            mRootContainer.removeView(mHeaderContainer);
+        }
+    }
+
     public FrameLayout getZoomContainer() {
         return mZoomContainer;
     }
@@ -218,9 +230,9 @@ public class PullToZoomScrollView extends ScrollView {
         Log.d(TAG, "f = " + f);
         if ((f > 0.0F) && (f < mZoomHeight)) {
             int i = (int) (0.65D * f);
-            mZoomContainer.scrollTo(-i / 2, -i);
-        } else if (mZoomContainer.getScrollY() != 0) {
-            mZoomContainer.scrollTo(0, 0);
+            mHeaderContainer.scrollTo(-i / 2, -i);
+        } else if (mHeaderContainer.getScrollY() != 0) {
+            mHeaderContainer.scrollTo(0, 0);
         }
     }
 

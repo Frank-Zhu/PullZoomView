@@ -20,16 +20,19 @@ import android.view.View;
  */
 public class PullToZoomScrollActivity extends ActionBarActivity {
 
+    private PullToZoomScrollView scrollView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pull_to_zoom_scroll_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        scrollView = (PullToZoomScrollView)findViewById(R.id.scroll_view);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.scroll_view, menu);
         return true;
     }
 
@@ -39,8 +42,16 @@ public class PullToZoomScrollActivity extends ActionBarActivity {
         if (id == android.R.id.home) {
             finish();
             return true;
-        } else if (id == R.id.action_settings) {
-            loadViewForCode();
+        }
+//        else if (id == R.id.action_settings) {
+//            loadViewForCode();
+//            return true;
+//        }
+        else if (id == R.id.action_show_head) {
+            scrollView.showHeaderView();
+            return true;
+        } else if (id == R.id.action_hide_head) {
+            scrollView.hideHeaderView();
             return true;
         }
         return super.onOptionsItemSelected(item);
