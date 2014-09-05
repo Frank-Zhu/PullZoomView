@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PullToZoomView</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Code</string>
+    <string name="title_pull_to_zoom_list_view">ZoomListView</string>
+    <string name="title_pull_to_zoom_scroll_view">ZoomScrollView</string>
+
+</resources>

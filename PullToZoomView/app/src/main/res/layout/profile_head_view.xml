@@ -1,0 +1,67 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/layout_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="300dp">
+
+        <ImageView
+            android:id="@+id/iv_user_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/ic_img_user_default"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/iv_user_head"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textColor="#ffffff" />
+
+        <LinearLayout
+            android:id="@+id/ll_action_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#66000000"
+            android:divider="@drawable/ic_img_line_v"
+            android:showDividers="middle"
+            android:dividerPadding="16dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="注册"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/tv_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="登录"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#ffffff"  />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>
