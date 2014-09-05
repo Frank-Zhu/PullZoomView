@@ -8,6 +8,6 @@
 
     <declare-styleable name="PullToZoomListView">
         <attr name="listHeadView" format="reference" />
-        <attr name="listZoomView" format="reference" />
+        <attr name="isHeadParallax" format="boolean" />
     </declare-styleable>
 </resources>

@@ -6,5 +6,9 @@
     <string name="action_settings">Code</string>
     <string name="title_pull_to_zoom_list_view">ZoomListView</string>
     <string name="title_pull_to_zoom_scroll_view">ZoomScrollView</string>
+    <string name="action_normal">Normal</string>
+    <string name="action_parallax">Parallax</string>
+    <string name="action_show_head">Show Head</string>
+    <string name="action_hide_head">Hide Head</string>
 
 </resources>

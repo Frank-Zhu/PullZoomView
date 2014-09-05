@@ -2,6 +2,7 @@ package com.ecloud.pulltozoomview;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -19,13 +20,15 @@ import android.widget.ImageView;
  */
 public class PullToZoomListActivity extends ActionBarActivity {
 
+    private PullToZoomListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pull_to_zoom_list_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        PullToZoomListView listView = (PullToZoomListView) findViewById(R.id.listview);
+        listView = (PullToZoomListView) findViewById(R.id.listview);
 
         String[] adapterData = new String[]{"Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
                 "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
@@ -33,8 +36,12 @@ public class PullToZoomListActivity extends ActionBarActivity {
                 "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient"};
 
         listView.setAdapter(new ArrayAdapter<String>(PullToZoomListActivity.this, android.R.layout.simple_list_item_1, adapterData));
-//        listView.getHeaderView().setImageResource(R.drawable.splash01);
-//        listView.getHeaderView().setScaleType(ImageView.ScaleType.CENTER_CROP);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.list_view, menu);
+        return true;
     }
 
     @Override
@@ -42,6 +49,18 @@ public class PullToZoomListActivity extends ActionBarActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
+            return true;
+        } else if (id == R.id.action_normal) {
+            listView.setParallax(false);
+            return true;
+        } else if (id == R.id.action_parallax) {
+            listView.setParallax(true);
+            return true;
+        }else if (id == R.id.action_show_head) {
+            listView.showHeadView();
+            return true;
+        } else if (id == R.id.action_hide_head) {
+            listView.hideHeadView();
             return true;
         }
         return super.onOptionsItemSelected(item);
