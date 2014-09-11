@@ -54,6 +54,7 @@ public class PullToZoomListView extends ListView implements AbsListView.OnScroll
     private float mMaxScale = -1.0F;
     private boolean isParallax = true;
     private boolean isHideHeader = false;
+    private boolean isEnableZoom = true;
 
     public PullToZoomListView(Context paramContext) {
         this(paramContext, null);
@@ -109,6 +110,10 @@ public class PullToZoomListView extends ListView implements AbsListView.OnScroll
 
     public void setParallax(boolean isParallax) {
         this.isParallax = isParallax;
+    }
+
+    public void setEnableZoom(boolean isEnableZoom) {
+        this.isEnableZoom = isEnableZoom;
     }
 
     public void setHeaderView(View headerView) {
@@ -178,9 +183,9 @@ public class PullToZoomListView extends ListView implements AbsListView.OnScroll
     @Override
     public void onScroll(AbsListView paramAbsListView, int paramInt1, int paramInt2, int paramInt3) {
         Log.d(TAG, "onScroll");
-        if (mHeaderView != null && !isHideHeader) {
+        if (mHeaderView != null && !isHideHeader && isEnableZoom) {
             float f = mHeaderHeight - mHeaderContainer.getBottom();
-            Log.d(TAG, "f|" + f);
+            Log.d(TAG, "f = " + f);
             if (isParallax) {
                 if ((f > 0.0F) && (f < mHeaderHeight)) {
                     int i = (int) (0.65D * f);
@@ -204,7 +209,7 @@ public class PullToZoomListView extends ListView implements AbsListView.OnScroll
 
     public boolean onTouchEvent(MotionEvent paramMotionEvent) {
         Log.d(TAG, "action = " + (0xFF & paramMotionEvent.getAction()));
-        if (mHeaderView != null && !isHideHeader) {
+        if (mHeaderView != null && !isHideHeader && isEnableZoom) {
             switch (0xFF & paramMotionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                 case MotionEvent.ACTION_OUTSIDE:
@@ -222,8 +227,9 @@ public class PullToZoomListView extends ListView implements AbsListView.OnScroll
                     if (j == INVALID_VALUE) {
                         Log.e("PullToZoomListView", "Invalid pointerId=" + mActivePointerId + " in onTouchEvent");
                     } else {
-                        if (mLastMotionY == -1.0F)
+                        if (mLastMotionY == -1.0F) {
                             mLastMotionY = paramMotionEvent.getY(j);
+                        }
                         if (mHeaderContainer.getBottom() >= mHeaderHeight) {
                             ViewGroup.LayoutParams localLayoutParams = mHeaderContainer.getLayoutParams();
                             float f = ((paramMotionEvent.getY(j) - mLastMotionY + mHeaderContainer.getBottom()) / mHeaderHeight - mLastScale) / 2.0F + mLastScale;

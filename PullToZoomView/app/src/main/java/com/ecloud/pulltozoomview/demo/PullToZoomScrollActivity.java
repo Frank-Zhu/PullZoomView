@@ -1,4 +1,4 @@
-package com.ecloud.pulltozoomview;
+package com.ecloud.pulltozoomview.demo;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.ecloud.pulltozoomview.PullToZoomScrollView;
 
 /**
  * Author:    ZhuWenWu

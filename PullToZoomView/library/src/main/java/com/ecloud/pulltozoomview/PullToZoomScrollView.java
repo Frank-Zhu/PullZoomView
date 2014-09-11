@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Interpolator;
+import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -47,6 +49,7 @@ public class PullToZoomScrollView extends ScrollView {
     private FrameLayout mZoomContainer;
     private LinearLayout mRootContainer;
 
+    private OnScrollViewChangedListener mOnScrollListener;
     private ScalingRunnable mScalingRunnable;
 
     private int mScreenHeight;
@@ -58,6 +61,8 @@ public class PullToZoomScrollView extends ScrollView {
     private float mLastScale = -1.0F;
     private float mMaxScale = -1.0F;
     private boolean isHeaderTop = true;
+    private boolean isEnableZoom = true;
+    private boolean isParallax = false;
 
     public PullToZoomScrollView(Context context) {
         this(context, null);
@@ -124,6 +129,18 @@ public class PullToZoomScrollView extends ScrollView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+    }
+
+    public void setEnableZoom(boolean isEnableZoom) {
+        this.isEnableZoom = isEnableZoom;
+    }
+
+    public void setParallax(boolean isParallax) {
+        this.isParallax = isParallax;
+    }
+
+    public void setOnScrollListener(OnScrollViewChangedListener mOnScrollListener) {
+        this.mOnScrollListener = mOnScrollListener;
     }
 
     public void setContentContainerView(View view) {
@@ -223,23 +240,30 @@ public class PullToZoomScrollView extends ScrollView {
     @Override
     protected void onScrollChanged(int left, int top, int oldLeft, int oldTop) {
         super.onScrollChanged(left, top, oldLeft, oldTop);
-        isHeaderTop = getScrollY() <= 0;
+        if (isEnableZoom) {
+            isHeaderTop = getScrollY() <= 0;
 
-        Log.d(TAG, "onScrollChanged --> ");
-        float f = mZoomHeight - mZoomContainer.getBottom();
-        Log.d(TAG, "f = " + f);
-        if ((f > 0.0F) && (f < mZoomHeight)) {
-            int i = (int) (0.65D * f);
-            mHeaderContainer.scrollTo(-i / 2, -i);
-        } else if (mHeaderContainer.getScrollY() != 0) {
-            mHeaderContainer.scrollTo(0, 0);
+            Log.d(TAG, "onScrollChanged --> ");
+            if (isParallax) {
+                float f = mZoomHeight - mZoomContainer.getBottom() + getScrollY();
+                Log.d(TAG, "f = " + f);
+                if ((f > 0.0F) && (f < mZoomHeight)) {
+                    int i = (int) (0.65D * f);
+                    mHeaderContainer.scrollTo(0, -i);
+                } else if (mHeaderContainer.getScrollY() != 0) {
+                    mHeaderContainer.scrollTo(0, 0);
+                }
+            }
+        }
+        if (mOnScrollListener != null) {
+            mOnScrollListener.onScrollChanged(left, top, oldLeft, oldTop);
         }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         Log.d(TAG, "onTouchEvent --> action = " + (0xFF & ev.getAction()));
-        if (isHeaderTop) {
+        if (isHeaderTop && isEnableZoom) {
             switch (0xFF & ev.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                 case MotionEvent.ACTION_OUTSIDE:
@@ -257,8 +281,9 @@ public class PullToZoomScrollView extends ScrollView {
                     if (j == -1) {
                         Log.e(TAG, "Invalid pointerId = " + mActivePointerId + " in onTouchEvent");
                     } else {
-                        if (mLastMotionY == -1.0F)
+                        if (mLastMotionY == -1.0F) {
                             mLastMotionY = ev.getY(j);
+                        }
                         if (mZoomContainer.getBottom() >= mZoomHeight) {
                             FrameLayout.LayoutParams localLayoutParams = (FrameLayout.LayoutParams) mZoomContainer.getLayoutParams();
                             ViewGroup.LayoutParams headLayoutParams = mHeaderContainer.getLayoutParams();
@@ -370,5 +395,9 @@ public class PullToZoomScrollView extends ScrollView {
             mIsFinished = false;
             post(this);
         }
+    }
+
+    public interface OnScrollViewChangedListener {
+        public void onScrollChanged(int left, int top, int oldLeft, int oldTop);
     }
 }
