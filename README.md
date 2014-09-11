@@ -2,8 +2,6 @@ PullZoomView
 ============
 
 An Android custom ListView and ScrollView with pull to zoom-in.
-
-<br>
 <br>
 ![](https://raw.githubusercontent.com/Frank-Zhu/PullZoomView/master/art/pull-to-zoom.gif)
 
@@ -16,16 +14,16 @@ Features
 
 Usage
 ============
-##1. Add PullZoomView to your project
-###Maven
+### 1. Add PullZoomView to your project
+####Maven
 
-###Eclipse
+####Eclipse
 1. Download ZIP then extract the PullZoomView project
 1. From Eclipse menu: New > Android Project from Existing Code > PullZoomView project > Finish
 1. Right click on your project
 1. Android > Library: Add > PullZoomView
 
-## 2.Reference the sample app
+### 2.Reference the sample app
 
 Using this library?
 ============
@@ -33,7 +31,7 @@ If you're using this library in one of your projects just [send me a G+ message]
 
 Contribution
 ============
-## Pull requests are welcome!
+### Pull requests are welcome!
 
 If you have a bug to report a feature to request or have other questions, [file an issue](https://github.com/Frank-Zhu/PullZoomView/issues). I'll try to answer as soon as I can.
 
