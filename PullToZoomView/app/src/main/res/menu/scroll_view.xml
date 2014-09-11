@@ -4,17 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
-    <!--<item-->
-        <!--android:id="@+id/action_normal"-->
-        <!--android:title="@string/action_normal"-->
-        <!--android:orderInCategory="100"-->
-        <!--app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_normal"
+        android:title="@string/action_normal"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 
-    <!--<item-->
-        <!--android:id="@+id/action_parallax"-->
-        <!--android:title="@string/action_parallax"-->
-        <!--android:orderInCategory="101"-->
-        <!--app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_parallax"
+        android:title="@string/action_parallax"
+        android:orderInCategory="101"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_hide_head"
@@ -26,5 +26,17 @@
         android:id="@+id/action_show_head"
         android:title="@string/action_show_head"
         android:orderInCategory="103"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_disable_zoom"
+        android:title="@string/action_disable_zoom"
+        android:orderInCategory="104"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_enable_zoom"
+        android:title="@string/action_enable_zoom"
+        android:orderInCategory="105"
         app:showAsAction="never" />
 </menu>

@@ -26,4 +26,16 @@
         android:title="@string/action_show_head"
         android:orderInCategory="103"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_disable_zoom"
+        android:title="@string/action_disable_zoom"
+        android:orderInCategory="104"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_enable_zoom"
+        android:title="@string/action_enable_zoom"
+        android:orderInCategory="105"
+        app:showAsAction="never" />
 </menu>

@@ -10,5 +10,7 @@
     <string name="action_parallax">Parallax</string>
     <string name="action_show_head">Show Head</string>
     <string name="action_hide_head">Hide Head</string>
+    <string name="action_disable_zoom">Disable Zoom</string>
+    <string name="action_enable_zoom">Enable Zoom</string>
 
 </resources>

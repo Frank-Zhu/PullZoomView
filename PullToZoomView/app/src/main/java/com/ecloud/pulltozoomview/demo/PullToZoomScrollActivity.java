@@ -29,7 +29,7 @@ public class PullToZoomScrollActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pull_to_zoom_scroll_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        scrollView = (PullToZoomScrollView)findViewById(R.id.scroll_view);
+        scrollView = (PullToZoomScrollView) findViewById(R.id.scroll_view);
     }
 
     @Override
@@ -49,11 +49,23 @@ public class PullToZoomScrollActivity extends ActionBarActivity {
 //            loadViewForCode();
 //            return true;
 //        }
-        else if (id == R.id.action_show_head) {
+        else if (id == R.id.action_normal) {
+            scrollView.setParallax(false);
+            return true;
+        } else if (id == R.id.action_parallax) {
+            scrollView.setParallax(true);
+            return true;
+        } else if (id == R.id.action_show_head) {
             scrollView.showHeaderView();
             return true;
         } else if (id == R.id.action_hide_head) {
             scrollView.hideHeaderView();
+            return true;
+        }else if (id == R.id.action_disable_zoom) {
+            scrollView.setEnableZoom(false);
+            return true;
+        } else if (id == R.id.action_enable_zoom) {
+            scrollView.setEnableZoom(true);
             return true;
         }
         return super.onOptionsItemSelected(item);
