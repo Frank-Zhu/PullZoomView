@@ -121,6 +121,10 @@ public class PullToZoomListView extends ListView implements AbsListView.OnScroll
             removeHeaderView(mHeaderContainer);
         }
         this.mHeaderView = headerView;
+        updateHeaderView(headerView);
+    }
+
+    private void updateHeaderView(View headerView) {
         if (headerView != null) {
             mHeaderContainer.removeAllViews();
             mHeaderContainer.addView(mHeaderView);
@@ -139,14 +143,14 @@ public class PullToZoomListView extends ListView implements AbsListView.OnScroll
     }
 
     public void showHeadView() {
-        if (mHeaderView != null) {
+        if (mHeaderView != null && isHideHeader) {
             isHideHeader = false;
-            addHeaderView(mHeaderContainer);
+            updateHeaderView(mHeaderView);
         }
     }
 
     public void hideHeadView() {
-        if (mHeaderView != null) {
+        if (mHeaderView != null && !isHideHeader) {
             isHideHeader = true;
             removeHeaderView(mHeaderContainer);
         }

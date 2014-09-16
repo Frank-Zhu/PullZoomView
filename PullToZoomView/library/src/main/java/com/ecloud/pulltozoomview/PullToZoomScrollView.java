@@ -12,9 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.Interpolator;
-import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -50,6 +48,7 @@ public class PullToZoomScrollView extends ScrollView {
     private LinearLayout mRootContainer;
 
     private OnScrollViewChangedListener mOnScrollListener;
+    private OnScrollViewZoomListener onScrollViewZoomListener;
     private ScalingRunnable mScalingRunnable;
 
     private int mScreenHeight;
@@ -143,6 +142,10 @@ public class PullToZoomScrollView extends ScrollView {
         this.mOnScrollListener = mOnScrollListener;
     }
 
+    public void setOnScrollViewZoomListener(OnScrollViewZoomListener onScrollViewZoomListener) {
+        this.onScrollViewZoomListener = onScrollViewZoomListener;
+    }
+
     public void setContentContainerView(View view) {
         if (mContentContainer != null) {
             mContentContainer.removeAllViews();
@@ -181,18 +184,22 @@ public class PullToZoomScrollView extends ScrollView {
 
     public void showHeaderView() {
         if (mZoomView != null || mHeadView != null) {
-            mRootContainer.addView(mHeaderContainer, 0);
+            mHeaderContainer.setVisibility(VISIBLE);
         }
     }
 
     public void hideHeaderView() {
         if (mZoomView != null || mHeadView != null) {
-            mRootContainer.removeView(mHeaderContainer);
+            mHeaderContainer.setVisibility(GONE);
         }
     }
 
     public FrameLayout getZoomContainer() {
         return mZoomContainer;
+    }
+
+    public FrameLayout getHeaderContainer() {
+        return mHeaderContainer;
     }
 
     public View getZoomView() {
@@ -274,6 +281,9 @@ public class PullToZoomScrollView extends ScrollView {
                     mActivePointerId = ev.getPointerId(0);
                     mMaxScale = (mScreenHeight / mZoomHeight);
                     mLastScale = (mZoomContainer.getBottom() / mZoomHeight);
+                    if (onScrollViewZoomListener != null) {
+                        onScrollViewZoomListener.onStart();
+                    }
                     break;
                 case MotionEvent.ACTION_MOVE:
                     Log.d(TAG, "mActivePointerId = " + mActivePointerId);
@@ -315,6 +325,9 @@ public class PullToZoomScrollView extends ScrollView {
                 case MotionEvent.ACTION_UP:
                     reset();
                     endScaling();
+                    if (onScrollViewZoomListener != null) {
+                        onScrollViewZoomListener.onFinish();
+                    }
                     break;
                 case MotionEvent.ACTION_CANCEL:
                     int i = ev.getActionIndex();
@@ -399,5 +412,11 @@ public class PullToZoomScrollView extends ScrollView {
 
     public interface OnScrollViewChangedListener {
         public void onScrollChanged(int left, int top, int oldLeft, int oldTop);
+    }
+
+    public interface OnScrollViewZoomListener {
+        public void onStart();
+
+        public void onFinish();
     }
 }

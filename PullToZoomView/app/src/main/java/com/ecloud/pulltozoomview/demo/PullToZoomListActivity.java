@@ -57,13 +57,13 @@ public class PullToZoomListActivity extends ActionBarActivity {
         } else if (id == R.id.action_parallax) {
             listView.setParallax(true);
             return true;
-        }else if (id == R.id.action_show_head) {
+        } else if (id == R.id.action_show_head) {
             listView.showHeadView();
             return true;
         } else if (id == R.id.action_hide_head) {
             listView.hideHeadView();
             return true;
-        }else if (id == R.id.action_disable_zoom) {
+        } else if (id == R.id.action_disable_zoom) {
             listView.setEnableZoom(false);
             return true;
         } else if (id == R.id.action_enable_zoom) {
