@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ecloud.pulltozoomview.PullToZoomListView
+    <com.ecloud.pulltozoomview.PullToZoomListViewEx
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:listHeadView="@layout/list_head_zoom_view" />
+        custom:zoomView="@layout/list_head_zoom_view" />
 </LinearLayout>

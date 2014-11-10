@@ -10,4 +10,11 @@
         <attr name="listHeadView" format="reference" />
         <attr name="isHeadParallax" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="PullToZoomView">
+        <attr name="headerView" format="reference" />
+        <attr name="contentView" format="reference" />
+        <attr name="zoomView" format="reference" />
+        <attr name="isHeaderParallax" format="boolean" />
+    </declare-styleable>
 </resources>

@@ -2,11 +2,14 @@ package com.ecloud.pulltozoomview.demo;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.ecloud.pulltozoomview.PullToZoomListView;
+import com.ecloud.pulltozoomview.PullToZoomListViewEx;
 
 /**
  * Author:    ZhuWenWu
@@ -21,7 +24,7 @@ import com.ecloud.pulltozoomview.PullToZoomListView;
  */
 public class PullToZoomListActivity extends ActionBarActivity {
 
-    private PullToZoomListView listView;
+    private PullToZoomListViewEx listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,7 @@ public class PullToZoomListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_pull_to_zoom_list_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listView = (PullToZoomListView) findViewById(R.id.listview);
+        listView = (PullToZoomListViewEx) findViewById(R.id.listview);
 
         String[] adapterData = new String[]{"Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
                 "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
@@ -37,6 +40,19 @@ public class PullToZoomListActivity extends ActionBarActivity {
                 "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient"};
 
         listView.setAdapter(new ArrayAdapter<String>(PullToZoomListActivity.this, android.R.layout.simple_list_item_1, adapterData));
+//        listView.getRootView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.e("zhuwenwu", "position = " + position);
+//            }
+//        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("zhuwenwu", "position = " + position);
+            }
+        });
     }
 
     @Override
@@ -58,16 +74,16 @@ public class PullToZoomListActivity extends ActionBarActivity {
             listView.setParallax(true);
             return true;
         } else if (id == R.id.action_show_head) {
-            listView.showHeadView();
+            listView.setHideHeader(false);
             return true;
         } else if (id == R.id.action_hide_head) {
-            listView.hideHeadView();
+            listView.setHideHeader(true);
             return true;
         } else if (id == R.id.action_disable_zoom) {
-            listView.setEnableZoom(false);
+            listView.setZoomEnabled(false);
             return true;
         } else if (id == R.id.action_enable_zoom) {
-            listView.setEnableZoom(true);
+            listView.setZoomEnabled(true);
             return true;
         }
         return super.onOptionsItemSelected(item);
