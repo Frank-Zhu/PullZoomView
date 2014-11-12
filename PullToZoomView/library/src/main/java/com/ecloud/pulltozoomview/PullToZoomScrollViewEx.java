@@ -26,7 +26,7 @@ import android.widget.ScrollView;
  */
 public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
     private static final String TAG = PullToZoomScrollViewEx.class.getSimpleName();
-
+    private boolean isCustomHeaderHeight = false;//自定义header高度之后可能导致zoomView拉伸不正确
     private FrameLayout mHeaderContainer;
     private LinearLayout mRootContainer;
     private View mContentView;
@@ -76,6 +76,12 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
         ViewGroup.LayoutParams localLayoutParams = mHeaderContainer.getLayoutParams();
         localLayoutParams.height = Math.abs(newScrollValue) + mHeaderHeight;
         mHeaderContainer.setLayoutParams(localLayoutParams);
+
+        if (isCustomHeaderHeight) {
+            ViewGroup.LayoutParams zoomLayoutParams = mZoomView.getLayoutParams();
+            zoomLayoutParams.height = Math.abs(newScrollValue) + mHeaderHeight;
+            mZoomView.setLayoutParams(zoomLayoutParams);
+        }
     }
 
     /**
@@ -152,8 +158,6 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
             mContentView = mLayoutInflater.inflate(contentViewResId, null, false);
         }
 
-//        setZoomViewSize(mScreenWidth, (int) (9.0F * (mScreenWidth / 16.0F)));
-
         mRootContainer.addView(mHeaderContainer);
         if (mContentView != null) {
             mRootContainer.addView(mContentView);
@@ -171,9 +175,9 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
      * @param width  宽
      * @param height 高
      */
-    public void setZoomViewSize(int width, int height) {
-        if (mZoomView != null) {
-            Object localObject = mZoomView.getLayoutParams();
+    public void setHeaderViewSize(int width, int height) {
+        if (mHeaderContainer != null) {
+            Object localObject = mHeaderContainer.getLayoutParams();
             if (localObject == null) {
                 localObject = new ViewGroup.LayoutParams(width, height);
             }
@@ -181,6 +185,20 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
             ((ViewGroup.LayoutParams) localObject).height = height;
             mHeaderContainer.setLayoutParams((ViewGroup.LayoutParams) localObject);
             mHeaderHeight = height;
+            isCustomHeaderHeight = true;
+        }
+    }
+
+    /**
+     * 设置HeaderView LayoutParams
+     *
+     * @param layoutParams LayoutParams
+     */
+    public void setHeaderLayoutParams(LinearLayout.LayoutParams layoutParams) {
+        if (mHeaderContainer != null) {
+            mHeaderContainer.setLayoutParams(layoutParams);
+            mHeaderHeight = layoutParams.height;
+            isCustomHeaderHeight = true;
         }
     }
 
@@ -222,6 +240,12 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
                     if (f2 > 1.0F) {
                         localLayoutParams.height = ((int) (f2 * mHeaderHeight));
                         mHeaderContainer.setLayoutParams(localLayoutParams);
+                        if (isCustomHeaderHeight) {
+                            ViewGroup.LayoutParams zoomLayoutParams;
+                            zoomLayoutParams = mZoomView.getLayoutParams();
+                            zoomLayoutParams.height = ((int) (f2 * mHeaderHeight));
+                            mZoomView.setLayoutParams(zoomLayoutParams);
+                        }
                         post(this);
                         return;
                     }

@@ -110,7 +110,6 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
                 mHeaderContainer.addView(mHeaderView);
             }
 
-            setZoomViewSize(mScreenWidth, (int) (9.0F * (mScreenWidth / 16.0F)));
             mHeaderHeight = mHeaderContainer.getHeight();
             mRootView.addHeaderView(mHeaderContainer);
         }
@@ -201,7 +200,6 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
         if (mHeaderView != null) {
             mHeaderContainer.addView(mHeaderView);
         }
-        setZoomViewSize(mScreenWidth, (int) (9.0F * (mScreenWidth / 16.0F)));
 
         mRootView.addHeaderView(mHeaderContainer);
     }
@@ -212,16 +210,23 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
      * @param width  宽
      * @param height 高
      */
-    public void setZoomViewSize(int width, int height) {
-        if (mZoomView != null) {
-            Object localObject = mZoomView.getLayoutParams();
+    public void setHeaderViewSize(int width, int height) {
+        if (mHeaderContainer != null) {
+            Object localObject = mHeaderContainer.getLayoutParams();
             if (localObject == null) {
                 localObject = new AbsListView.LayoutParams(width, height);
             }
             ((ViewGroup.LayoutParams) localObject).width = width;
             ((ViewGroup.LayoutParams) localObject).height = height;
-            mZoomView.setLayoutParams((ViewGroup.LayoutParams) localObject);
+            mHeaderContainer.setLayoutParams((ViewGroup.LayoutParams) localObject);
             mHeaderHeight = height;
+        }
+    }
+
+    public void setHeaderLayoutParams(AbsListView.LayoutParams layoutParams) {
+        if (mHeaderContainer != null) {
+            mHeaderContainer.setLayoutParams(layoutParams);
+            mHeaderHeight = layoutParams.height;
         }
     }
 

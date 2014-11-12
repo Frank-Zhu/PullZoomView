@@ -10,5 +10,6 @@
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        custom:headerView="@layout/profile_head_view"
         custom:zoomView="@layout/list_head_zoom_view" />
 </LinearLayout>
