@@ -214,13 +214,13 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
      */
     public void setZoomViewSize(int width, int height) {
         if (mZoomView != null) {
-            Object localObject = mHeaderContainer.getLayoutParams();
+            Object localObject = mZoomView.getLayoutParams();
             if (localObject == null) {
                 localObject = new AbsListView.LayoutParams(width, height);
             }
             ((ViewGroup.LayoutParams) localObject).width = width;
             ((ViewGroup.LayoutParams) localObject).height = height;
-            mHeaderContainer.setLayoutParams((ViewGroup.LayoutParams) localObject);
+            mZoomView.setLayoutParams((ViewGroup.LayoutParams) localObject);
             mHeaderHeight = height;
         }
     }
@@ -229,7 +229,7 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
                             int paramInt3, int paramInt4) {
         super.onLayout(paramBoolean, paramInt1, paramInt2, paramInt3, paramInt4);
         Log.d(TAG, "onLayout --> ");
-        if (mHeaderHeight == 0 && mZoomView != null) {
+        if (mHeaderHeight == 0 && mHeaderContainer != null) {
             mHeaderHeight = mHeaderContainer.getHeight();
         }
     }

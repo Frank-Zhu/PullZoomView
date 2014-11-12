@@ -2,12 +2,14 @@ package com.ecloud.pulltozoomview.demo;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.ecloud.pulltozoomview.PullToZoomScrollView;
+import com.ecloud.pulltozoomview.PullToZoomScrollViewEx;
 
 /**
  * Author:    ZhuWenWu
@@ -22,14 +24,20 @@ import com.ecloud.pulltozoomview.PullToZoomScrollView;
  */
 public class PullToZoomScrollActivity extends ActionBarActivity {
 
-    private PullToZoomScrollView scrollView;
+    private PullToZoomScrollViewEx scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pull_to_zoom_scroll_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        scrollView = (PullToZoomScrollView) findViewById(R.id.scroll_view);
+        scrollView = (PullToZoomScrollViewEx) findViewById(R.id.scroll_view);
+        scrollView.getRootView().findViewById(R.id.tv_test1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("zhuwenwu", "onClick -->");
+            }
+        });
     }
 
     @Override
@@ -56,16 +64,20 @@ public class PullToZoomScrollActivity extends ActionBarActivity {
             scrollView.setParallax(true);
             return true;
         } else if (id == R.id.action_show_head) {
-            scrollView.showHeaderView();
+//            scrollView.showHeaderView();
+            scrollView.setHideHeader(false);
             return true;
         } else if (id == R.id.action_hide_head) {
-            scrollView.hideHeaderView();
+//            scrollView.hideHeaderView();
+            scrollView.setHideHeader(true);
             return true;
-        }else if (id == R.id.action_disable_zoom) {
-            scrollView.setEnableZoom(false);
+        } else if (id == R.id.action_disable_zoom) {
+//            scrollView.setEnableZoom(false);
+            scrollView.setZoomEnabled(false);
             return true;
         } else if (id == R.id.action_enable_zoom) {
-            scrollView.setEnableZoom(true);
+//            scrollView.setEnableZoom(true);
+            scrollView.setZoomEnabled(true);
             return true;
         }
         return super.onOptionsItemSelected(item);

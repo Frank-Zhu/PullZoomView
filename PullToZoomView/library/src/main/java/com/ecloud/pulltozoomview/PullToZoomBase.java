@@ -35,7 +35,7 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
     protected int mScreenWidth;
 
     private boolean isZoomEnabled = true;
-    private boolean isParallax = false;
+    private boolean isParallax = true;
     private boolean isZooming = false;
     private boolean isHideHeader = false;
 
