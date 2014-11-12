@@ -45,6 +45,7 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
     private float mLastMotionX;
     private float mInitialMotionY;
     private float mInitialMotionX;
+    private OnPullZoomListener onPullZoomListener;
 
     public PullToZoomBase(Context context) {
         this(context, null);
@@ -94,6 +95,10 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
             a.recycle();
         }
         addView(mRootView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+    public void setOnPullZoomListener(OnPullZoomListener onPullZoomListener) {
+        this.onPullZoomListener = onPullZoomListener;
     }
 
     @Override
@@ -232,6 +237,9 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
                     // If we're already refreshing, just scroll back to the top
                     if (isZooming()) {
                         smoothScrollToTop();
+                        if (onPullZoomListener != null) {
+                            onPullZoomListener.onPullZoomEnd();
+                        }
                         isZooming = false;
                         return true;
                     }
@@ -253,6 +261,9 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
         newScrollValue = Math.round(Math.min(initialMotionValue - lastMotionValue, 0) / FRICTION);
 
         pullHeaderToZoom(newScrollValue);
+        if (onPullZoomListener != null) {
+            onPullZoomListener.onPullZooming(newScrollValue);
+        }
     }
 
     protected abstract void pullHeaderToZoom(int newScrollValue);
@@ -266,4 +277,10 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
     protected abstract void smoothScrollToTop();
 
     protected abstract boolean isReadyForPullStart();
+
+    public interface OnPullZoomListener {
+        public void onPullZooming(int newScrollValue);
+
+        public void onPullZoomEnd();
+    }
 }
