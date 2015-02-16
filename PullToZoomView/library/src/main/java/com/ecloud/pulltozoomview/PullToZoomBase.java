@@ -102,7 +102,7 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
     }
 
     @Override
-    public T getRootView() {
+    public T getPullRootView() {
         return mRootView;
     }
 

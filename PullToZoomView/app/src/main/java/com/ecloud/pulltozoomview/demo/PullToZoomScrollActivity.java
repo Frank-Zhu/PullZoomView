@@ -36,7 +36,21 @@ public class PullToZoomScrollActivity extends ActionBarActivity {
         setContentView(R.layout.activity_pull_to_zoom_scroll_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         scrollView = (PullToZoomScrollViewEx) findViewById(R.id.scroll_view);
-        scrollView.getRootView().findViewById(R.id.tv_test1).setOnClickListener(new View.OnClickListener() {
+        scrollView.getPullRootView().findViewById(R.id.tv_test1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("zhuwenwu", "onClick -->");
+            }
+        });
+
+        scrollView.getPullRootView().findViewById(R.id.tv_test2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("zhuwenwu", "onClick -->");
+            }
+        });
+
+        scrollView.getPullRootView().findViewById(R.id.tv_test3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("zhuwenwu", "onClick -->");

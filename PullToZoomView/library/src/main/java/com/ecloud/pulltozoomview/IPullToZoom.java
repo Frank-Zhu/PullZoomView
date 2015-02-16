@@ -31,7 +31,7 @@ public interface IPullToZoom<T extends View> {
      *
      * @return The View which is currently wrapped
      */
-    public T getRootView();
+    public T getPullRootView();
 
     /**
      * Whether Pull-to-Refresh is enabled
