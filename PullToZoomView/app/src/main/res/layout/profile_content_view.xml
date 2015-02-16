@@ -16,6 +16,7 @@
         android:text="test1" />
 
     <TextView
+        android:id="@+id/tv_test2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
@@ -24,6 +25,7 @@
         android:text="test1" />
 
     <TextView
+        android:id="@+id/tv_test3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
