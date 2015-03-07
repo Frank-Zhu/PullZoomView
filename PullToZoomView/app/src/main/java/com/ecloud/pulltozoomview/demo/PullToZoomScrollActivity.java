@@ -1,6 +1,5 @@
 package com.ecloud.pulltozoomview.demo;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
@@ -9,10 +8,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.ecloud.pulltozoomview.PullToZoomScrollView;
 import com.ecloud.pulltozoomview.PullToZoomScrollViewEx;
 
 /**
@@ -35,6 +32,7 @@ public class PullToZoomScrollActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pull_to_zoom_scroll_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        loadViewForCode();
         scrollView = (PullToZoomScrollViewEx) findViewById(R.id.scroll_view);
         scrollView.getPullRootView().findViewById(R.id.tv_test1).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +90,7 @@ public class PullToZoomScrollActivity extends ActionBarActivity {
             scrollView.setHideHeader(false);
             return true;
         } else if (id == R.id.action_hide_head) {
-//            scrollView.hideHeaderView();
+//            scrollView.hideHeaderVie˛w();
             scrollView.setHideHeader(true);
             return true;
         } else if (id == R.id.action_disable_zoom) {
@@ -108,12 +106,12 @@ public class PullToZoomScrollActivity extends ActionBarActivity {
     }
 
     private void loadViewForCode() {
-        PullToZoomScrollView scrollView = (PullToZoomScrollView) findViewById(R.id.scroll_view);
+        PullToZoomScrollViewEx scrollView = (PullToZoomScrollViewEx) findViewById(R.id.scroll_view);
         View headView = LayoutInflater.from(this).inflate(R.layout.profile_head_view, null, false);
         View zoomView = LayoutInflater.from(this).inflate(R.layout.profile_zoom_view, null, false);
         View contentView = LayoutInflater.from(this).inflate(R.layout.profile_content_view, null, false);
-        scrollView.setHeaderContainer(headView);
+        scrollView.setHeaderView(headView);
         scrollView.setZoomView(zoomView);
-        scrollView.setContentContainerView(contentView);
+        scrollView.setScrollContentView(contentView);
     }
 }

@@ -103,24 +103,44 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
 
     @Override
     public void setHeaderView(View headerView) {
-        if (mHeaderContainer != null && headerView != null) {
-            mHeaderContainer.removeAllViews();
+        if (headerView != null) {
             mHeaderView = headerView;
-            if (mZoomView != null) {
-                mHeaderContainer.addView(mZoomView);
-            }
-            mHeaderContainer.addView(mHeaderView);
+            updateHeaderView();
         }
     }
 
     @Override
     public void setZoomView(View zoomView) {
-        if (mHeaderContainer != null && zoomView != null) {
+        if (zoomView != null) {
+            mZoomView = zoomView;
+            updateHeaderView();
+        }
+    }
+
+    /**
+     * 更新HeaderView  先移除-->再添加zoomView、HeaderView -->然后添加到listView的head
+     */
+    private void updateHeaderView() {
+        if (mHeaderContainer != null) {
             mHeaderContainer.removeAllViews();
-            mHeaderContainer.addView(mZoomView);
+
+            if (mZoomView != null) {
+                mHeaderContainer.addView(mZoomView);
+            }
+
             if (mHeaderView != null) {
                 mHeaderContainer.addView(mHeaderView);
             }
+        }
+    }
+
+    public void setScrollContentView(View contentView) {
+        if (contentView != null) {
+            if (mContentView != null) {
+                mRootContainer.removeView(mContentView);
+            }
+            mContentView = contentView;
+            mRootContainer.addView(mContentView);
         }
     }
 
@@ -154,7 +174,7 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
         if (mHeaderView != null) {
             mHeaderContainer.addView(mHeaderView);
         }
-        int contentViewResId = a.getResourceId(R.styleable.PullToZoomScrollView_scrollContentView, 0);
+        int contentViewResId = a.getResourceId(R.styleable.PullToZoomView_contentView, 0);
         if (contentViewResId > 0) {
             LayoutInflater mLayoutInflater = LayoutInflater.from(getContext());
             mContentView = mLayoutInflater.inflate(contentViewResId, null, false);

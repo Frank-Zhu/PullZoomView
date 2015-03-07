@@ -9,8 +9,5 @@
     <com.ecloud.pulltozoomview.PullToZoomScrollViewEx
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        custom:zoomView="@layout/profile_zoom_view"
-        custom:contentView="@layout/profile_content_view"
-        custom:headerView="@layout/profile_head_view"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>

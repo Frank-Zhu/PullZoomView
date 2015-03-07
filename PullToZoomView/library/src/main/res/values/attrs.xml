@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="PullToZoomScrollView">
-        <attr name="scrollHeadView" format="reference" />
-        <attr name="scrollContentView" format="reference" />
-        <attr name="scrollZoomView" format="reference" />
-    </declare-styleable>
-
-    <declare-styleable name="PullToZoomListView">
-        <attr name="listHeadView" format="reference" />
-        <attr name="isHeadParallax" format="boolean" />
-    </declare-styleable>
-
     <declare-styleable name="PullToZoomView">
         <attr name="headerView" format="reference" />
         <attr name="contentView" format="reference" />
