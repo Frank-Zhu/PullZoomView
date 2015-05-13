@@ -28,6 +28,13 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(new Intent(MainActivity.this, PullToZoomScrollActivity.class));
             }
         });
+
+        findViewById(R.id.btn_recycler_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PullToZoomRecyclerActivity.class));
+            }
+        });
     }
 
 

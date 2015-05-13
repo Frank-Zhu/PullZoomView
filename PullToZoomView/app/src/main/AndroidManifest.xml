@@ -24,6 +24,9 @@
         <activity
             android:name=".PullToZoomScrollActivity"
             android:label="@string/title_pull_to_zoom_scroll_view" />
+        <activity
+            android:name=".PullToZoomRecyclerActivity"
+            android:label="@string/title_pull_to_zoom_scroll_view" />
     </application>
 
 </manifest>
