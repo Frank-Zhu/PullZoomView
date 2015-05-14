@@ -7,6 +7,7 @@ package com.ecloud.pulltozoomview.demo.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -170,9 +171,23 @@ public abstract class RecyclerViewHeaderAdapter<V extends RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position >= headers.size() && (position - headers.size()) < getCount())
+        if (position >= headers.size() && (position - headers.size()) < getCount()) {
             //noinspection unchecked
             onBindView((V) holder, position - headers.size());
+        } else {
+
+            try {
+                final StaggeredGridLayoutManager.LayoutParams lp =
+                        (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+//
+                lp.setFullSpan(true);
+                ;
+
+                holder.itemView.setLayoutParams(lp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public abstract void onBindView(V view, int position);

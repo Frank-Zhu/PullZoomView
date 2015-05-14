@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ecloud.pulltozoomview.demo.recyclerview.PullToZoomRecyclerActivity;
+
 
 public class MainActivity extends ActionBarActivity {
 

@@ -1,10 +1,10 @@
-package com.ecloud.pulltozoomview.demo;
+package com.ecloud.pulltozoomview.demo.recyclerview;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +13,8 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
-import com.ecloud.pulltozoomview.demo.recyclerview.RecyclerViewHeaderAdapter;
+import com.ecloud.pulltozoomview.demo.PullToZoomRecyclerViewEx;
+import com.ecloud.pulltozoomview.demo.R;
 
 /**
  * Created by manishdeora on 13/05/15.
@@ -32,16 +33,17 @@ public class PullToZoomRecyclerActivity extends ActionBarActivity {
         listView = (PullToZoomRecyclerViewEx) findViewById(R.id.recyclerview);
 
 
-        RecyclerViewHeaderAdapter mAdapter = new RecyclerAdapterCustom(this);
+        final RecyclerViewHeaderAdapter mAdapter = new RecyclerAdapterCustom(this);
 
-//        manager=new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-//        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-//            @Override
-//            public int getSpanSize(int position) {
-//                return adapter.isHeader(position) ? manager.getSpanCount() : 1;
-//            }
-//        });
-        listView.setAdapterAndLayoutManager(mAdapter, new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        final GridLayoutManager manager = new GridLayoutManager(this, 2);
+        manager.setOrientation(GridLayoutManager.VERTICAL);
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return mAdapter.getItemViewType(position) == RecyclerViewHeaderAdapter.INT_TYPE_HEADER ? 2 : 1;
+            }
+        });
+        listView.setAdapterAndLayoutManager(mAdapter, manager);
 
 
         DisplayMetrics localDisplayMetrics = new DisplayMetrics();
@@ -91,6 +93,18 @@ public class PullToZoomRecyclerActivity extends ActionBarActivity {
         final String[] adapterData = new String[]{"Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
                 "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
                 "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent",
+                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
+                "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
+                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent",
+                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
+                "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
+                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent",
+                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
+                "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
+                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent",
+                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
+                "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
+                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent",
                 "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient"};
 
         public RecyclerAdapterCustom(Context context) {
@@ -111,6 +125,15 @@ public class PullToZoomRecyclerActivity extends ActionBarActivity {
         public void onBindView(ViewHolderRecyclerPullToZoom view, int position) {
 
             view.mtextview.setText(adapterData[position]);
+
+//            final StaggeredGridLayoutManager.LayoutParams lp =
+//                    (StaggeredGridLayoutManager.LayoutParams) view.mtextview.getLayoutParams();
+////
+//            lp.span = span;
+//            lp.height = size;
+//            itemView.setLayoutParams(lp);
+
+
         }
     }
 

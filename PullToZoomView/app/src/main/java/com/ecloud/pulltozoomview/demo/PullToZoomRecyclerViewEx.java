@@ -3,8 +3,8 @@ package com.ecloud.pulltozoomview.demo;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.SystemClock;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -173,7 +173,7 @@ public class PullToZoomRecyclerViewEx extends PullToZoomBase<RecyclerView> imple
         }
     }
 
-    public void setAdapterAndLayoutManager(RecyclerView.Adapter adapter, StaggeredGridLayoutManager mLayoutManager) {
+    public void setAdapterAndLayoutManager(RecyclerView.Adapter adapter, GridLayoutManager mLayoutManager) {
         mRootView.setLayoutManager(mLayoutManager);
         mRootView.setAdapter(adapter);
         updateHeaderView();
@@ -234,7 +234,9 @@ public class PullToZoomRecyclerViewEx extends PullToZoomBase<RecyclerView> imple
     private boolean isFirstItemVisible() {
         if (mRootView != null) {
             final RecyclerView.Adapter adapter = mRootView.getAdapter();
-            final StaggeredGridLayoutManager mLayoutmanager = (StaggeredGridLayoutManager) mRootView.getLayoutManager();
+            final GridLayoutManager mLayoutmanager = (GridLayoutManager) mRootView.getLayoutManager();
+
+
             if (null == adapter || adapter.getItemCount() == 0) {
                 return true;
             } else {
@@ -248,7 +250,7 @@ public class PullToZoomRecyclerViewEx extends PullToZoomBase<RecyclerView> imple
 
                 int[] into = {0,0};
                 if (mLayoutmanager != null)
-                    into = mLayoutmanager.findFirstVisibleItemPositions(into);
+                    into[0] = mLayoutmanager.findFirstVisibleItemPosition();
                 if (into.length > 0 && into.length > 0 && into[0] <= 1) {
                     final View firstVisibleChild = mRootView.getChildAt(0);
                     if (firstVisibleChild != null) {
