@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ecloud.pulltozoomview.demo.recyclerview.PullToZoomRecyclerActivity;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -26,6 +28,13 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, PullToZoomScrollActivity.class));
+            }
+        });
+
+        findViewById(R.id.btn_recycler_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PullToZoomRecyclerActivity.class));
             }
         });
     }
