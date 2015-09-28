@@ -26,7 +26,7 @@ import android.widget.ScrollView;
  */
 public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
     private static final String TAG = PullToZoomScrollViewEx.class.getSimpleName();
-    private boolean isCustomHeaderHeight = false;//自定义header高度之后可能导致zoomView拉伸不正确
+    private boolean isCustomHeaderHeight = false;
     private FrameLayout mHeaderContainer;
     private LinearLayout mRootContainer;
     private View mContentView;
@@ -117,9 +117,6 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
         }
     }
 
-    /**
-     * 更新HeaderView  先移除-->再添加zoomView、HeaderView -->然后添加到listView的head
-     */
     private void updateHeaderView() {
         if (mHeaderContainer != null) {
             mHeaderContainer.removeAllViews();
@@ -194,8 +191,8 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
     /**
      * 设置HeaderView高度
      *
-     * @param width  宽
-     * @param height 高
+     * @param width
+     * @param height
      */
     public void setHeaderViewSize(int width, int height) {
         if (mHeaderContainer != null) {

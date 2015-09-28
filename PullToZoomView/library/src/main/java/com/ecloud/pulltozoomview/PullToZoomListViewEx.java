@@ -82,20 +82,12 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
         }
     }
 
-    /**
-     * 移除HeaderView
-     * 如果要兼容API 9,需要修改此处逻辑，API 11以下不支持动态添加header
-     */
     private void removeHeaderView() {
         if (mHeaderContainer != null) {
             mRootView.removeHeaderView(mHeaderContainer);
         }
     }
 
-    /**
-     * 更新HeaderView  先移除-->再添加zoomView、HeaderView -->然后添加到listView的head
-     * 如果要兼容API 9,需要修改此处逻辑，API 11以下不支持动态添加header
-     */
     private void updateHeaderView() {
         if (mHeaderContainer != null) {
             mRootView.removeHeaderView(mHeaderContainer);
@@ -123,13 +115,6 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
         mRootView.setOnItemClickListener(listener);
     }
 
-    /**
-     * 创建listView 如果要兼容API9,需要修改此处
-     *
-     * @param context 上下文
-     * @param attrs   AttributeSet
-     * @return ListView
-     */
     @Override
     protected ListView createRootView(Context context, AttributeSet attrs) {
         ListView lv = new ListView(context, attrs);
@@ -147,11 +132,6 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
         mScalingRunnable.startAnimation(200L);
     }
 
-    /**
-     * zoomView动画逻辑
-     *
-     * @param newScrollValue 手指Y轴移动距离值
-     */
     @Override
     protected void pullHeaderToZoom(int newScrollValue) {
         Log.d(TAG, "pullHeaderToZoom --> newScrollValue = " + newScrollValue);
@@ -210,8 +190,8 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
     /**
      * 设置HeaderView高度
      *
-     * @param width  宽
-     * @param height 高
+     * @param width
+     * @param height
      */
     public void setHeaderViewSize(int width, int height) {
         if (mHeaderContainer != null) {
