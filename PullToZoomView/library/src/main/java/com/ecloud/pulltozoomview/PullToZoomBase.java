@@ -46,6 +46,8 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
     private float mInitialMotionY;
     private float mInitialMotionX;
     private OnPullZoomListener onPullZoomListener;
+    private int initHeight=0;
+    private int currentHeight =0;
 
     public PullToZoomBase(Context context) {
         this(context, null);
@@ -148,56 +150,103 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
         this.isHideHeader = isHideHeader;
     }
 
+    // @Override
+    // public boolean onInterceptTouchEvent(MotionEvent event) {
+    //     if (!isPullToZoomEnabled() || isHideHeader()) {
+    //         return false;
+    //     }
+
+    //     final int action = event.getAction();
+
+    //     if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+    //         mIsBeingDragged = false;
+    //         return false;
+    //     }
+
+    //     if (action != MotionEvent.ACTION_DOWN && mIsBeingDragged) {
+    //         return true;
+    //     }
+    //     switch (action) {
+    //         case MotionEvent.ACTION_MOVE: {
+    //             if (isReadyForPullStart()) {
+    //                 final float y = event.getY(), x = event.getX();
+    //                 final float diff, oppositeDiff, absDiff;
+
+    //                 // We need to use the correct values, based on scroll
+    //                 // direction
+    //                 diff = y - mLastMotionY;
+    //                 oppositeDiff = x - mLastMotionX;
+    //                 absDiff = Math.abs(diff);
+
+    //                 if (absDiff > mTouchSlop && absDiff > Math.abs(oppositeDiff)) {
+    //                     if (diff >= 1f && isReadyForPullStart()) {
+    //                         mLastMotionY = y;
+    //                         mLastMotionX = x;
+    //                         mIsBeingDragged = true;
+    //                     }
+    //                 }
+    //             }
+    //             break;
+    //         }
+    //         case MotionEvent.ACTION_DOWN: {
+    //             if (isReadyForPullStart()) {
+    //                 mLastMotionY = mInitialMotionY = event.getY();
+    //                 mLastMotionX = mInitialMotionX = event.getX();
+    //                 mIsBeingDragged = false;
+    //             }
+    //             break;
+    //         }
+    //     }
+
+    //     return mIsBeingDragged;
+    // }
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        if (!isPullToZoomEnabled() || isHideHeader()) {
-            return false;
-        }
-
-        final int action = event.getAction();
-
-        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-            mIsBeingDragged = false;
-            return false;
-        }
-
-        if (action != MotionEvent.ACTION_DOWN && mIsBeingDragged) {
-            return true;
-        }
-        switch (action) {
-            case MotionEvent.ACTION_MOVE: {
-                if (isReadyForPullStart()) {
-                    final float y = event.getY(), x = event.getX();
-                    final float diff, oppositeDiff, absDiff;
-
-                    // We need to use the correct values, based on scroll
-                    // direction
-                    diff = y - mLastMotionY;
-                    oppositeDiff = x - mLastMotionX;
-                    absDiff = Math.abs(diff);
-
-                    if (absDiff > mTouchSlop && absDiff > Math.abs(oppositeDiff)) {
-                        if (diff >= 1f && isReadyForPullStart()) {
-                            mLastMotionY = y;
-                            mLastMotionX = x;
-                            mIsBeingDragged = true;
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                initHeight = getZoomView().getHeight();
+                isZooming=false;
+                mLastMotionY = mInitialMotionY = ev.getY();
+                mLastMotionX = mInitialMotionX = ev.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                currentHeight =getZoomView().getHeight();
+                if(isReadyForPullStart()){
+                    if(currentHeight >initHeight){
+                        mIsBeingDragged = true;
+                        onTouchEvent(ev);
+                        return true;
+                    }else{
+                        final float y = ev.getY(), x = ev.getX();
+                        final float diff, oppositeDiff, absDiff;
+                        // We need to use the correct values, based on scroll
+                        // direction
+                        diff = y - mLastMotionY;
+                        oppositeDiff = x - mLastMotionX;
+                        absDiff = Math.abs(diff);
+                        if (absDiff > mTouchSlop && absDiff > Math.abs(oppositeDiff)) {
+                            if (diff >= 1f) {
+                                mIsBeingDragged = true;
+                                onTouchEvent(ev);
+                                return true;
+                            }else{
+                                mIsBeingDragged = false;
+                                return super.dispatchTouchEvent(ev);
+                            }
                         }
                     }
-                }
-                break;
-            }
-            case MotionEvent.ACTION_DOWN: {
-                if (isReadyForPullStart()) {
-                    mLastMotionY = mInitialMotionY = event.getY();
-                    mLastMotionX = mInitialMotionX = event.getX();
+                }else{
                     mIsBeingDragged = false;
+                    return super.dispatchTouchEvent(ev);
                 }
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                onTouchEvent(ev);
                 break;
-            }
         }
-
-        return mIsBeingDragged;
+        return super.dispatchTouchEvent(ev);
     }
+    
 
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent event) {
@@ -221,14 +270,14 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
                 break;
             }
 
-            case MotionEvent.ACTION_DOWN: {
-                if (isReadyForPullStart()) {
-                    mLastMotionY = mInitialMotionY = event.getY();
-                    mLastMotionX = mInitialMotionX = event.getX();
-                    return true;
-                }
-                break;
-            }
+            // case MotionEvent.ACTION_DOWN: {
+            //     if (isReadyForPullStart()) {
+            //         mLastMotionY = mInitialMotionY = event.getY();
+            //         mLastMotionX = mInitialMotionX = event.getX();
+            //         return true;
+            //     }
+            //     break;
+            // }
 
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP: {
