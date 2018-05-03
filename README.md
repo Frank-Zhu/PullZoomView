@@ -19,7 +19,7 @@ In your `build.gradle`:
 
 ```gradle
  dependencies {
-   compile 'com.github.frank-zhu:pullzoomview:1.0.0'
+   implementation 'com.github.frank-zhu:pullzoomview:1.0.0'
  }
 ```
 or Maven:
