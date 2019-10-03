@@ -1,19 +1,21 @@
-package com.ecloud.pulltozoomview;
+package com.ecloud.pulltozoomview.demo;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.SystemClock;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.AbsListView;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+
+import com.ecloud.pulltozoomview.PullToZoomBase;
+import com.ecloud.pulltozoomview.demo.recyclerview.RecyclerViewHeaderAdapter;
 
 /**
  * Author:    ZhuWenWu
@@ -26,8 +28,8 @@ import android.widget.ListView;
  * 2014/11/7        ZhuWenWu            1.0                    1.0
  * Why & What is modified:
  */
-public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements AbsListView.OnScrollListener {
-    private static final String TAG = PullToZoomListViewEx.class.getSimpleName();
+public class PullToZoomRecyclerViewEx extends PullToZoomBase<RecyclerView> implements AbsListView.OnScrollListener {
+    private static final String TAG = PullToZoomRecyclerViewEx.class.getSimpleName();
     private FrameLayout mHeaderContainer;
     private int mHeaderHeight;
     private ScalingRunnable mScalingRunnable;
@@ -39,13 +41,41 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
         }
     };
 
-    public PullToZoomListViewEx(Context context) {
+    public PullToZoomRecyclerViewEx(Context context) {
         this(context, null);
     }
 
-    public PullToZoomListViewEx(Context context, AttributeSet attrs) {
+    public PullToZoomRecyclerViewEx(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mRootView.setOnScrollListener(this);
+        mRootView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (mZoomView != null && !isHideHeader() && isPullToZoomEnabled()) {
+                    float f = mHeaderHeight - mHeaderContainer.getBottom();
+                    Log.d(TAG, "onScroll --> f = " + f);
+                    if (isParallax()) {
+                        if ((f > 0.0F) && (f < mHeaderHeight)) {
+                            int i = (int) (0.65D * f);
+                            mHeaderContainer.scrollTo(0, -i);
+                        } else if (mHeaderContainer.getScrollY() != 0) {
+                            mHeaderContainer.scrollTo(0, 0);
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+
+            }
+        });
         mScalingRunnable = new ScalingRunnable();
     }
 
@@ -82,45 +112,91 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
         }
     }
 
+    /**
+     * 移除HeaderView
+     * 如果要兼容API 9,需要修改此处逻辑，API 11以下不支持动态添加header
+     */
     private void removeHeaderView() {
         if (mHeaderContainer != null) {
-            mRootView.removeHeaderView(mHeaderContainer);
+            if (mRootView != null && mRootView.getAdapter() != null) {
+
+                RecyclerViewHeaderAdapter<RecyclerView.ViewHolder> mAdapter = (RecyclerViewHeaderAdapter<RecyclerView.ViewHolder>) mRootView.getAdapter();
+
+                if (mAdapter != null) {
+
+                    if (mAdapter.getHeader(0) != null)
+                        mAdapter.removeHeaderView(mAdapter.getHeader(0));
+                }
+
+            }
         }
     }
 
+    /**
+     * 更新HeaderView  先移除-->再添加zoomView、HeaderView -->然后添加到listView的head
+     * 如果要兼容API 9,需要修改此处逻辑，API 11以下不支持动态添加header
+     */
     private void updateHeaderView() {
         if (mHeaderContainer != null) {
-            mRootView.removeHeaderView(mHeaderContainer);
 
-            mHeaderContainer.removeAllViews();
+            if (mRootView != null && mRootView.getAdapter() != null) {
 
-            if (mZoomView != null) {
-                mHeaderContainer.addView(mZoomView);
+                RecyclerViewHeaderAdapter<RecyclerView.ViewHolder> mAdapter = (RecyclerViewHeaderAdapter<RecyclerView.ViewHolder>) mRootView.getAdapter();
+
+                if (mAdapter != null) {
+
+                    if (mAdapter.getHeader(0) != null)
+                        mAdapter.removeHeaderView(mAdapter.getHeader(0));
+
+                    mHeaderContainer.removeAllViews();
+
+                    if (mZoomView != null) {
+                        mHeaderContainer.addView(mZoomView);
+                    }
+
+                    if (mHeaderView != null) {
+                        mHeaderContainer.addView(mHeaderView);
+                    }
+
+                    mHeaderHeight = mHeaderContainer.getHeight();
+
+                    RecyclerViewHeaderAdapter.ExtraItem mExtraItem = new RecyclerViewHeaderAdapter.ExtraItem(RecyclerViewHeaderAdapter.INT_TYPE_HEADER, new RecyclerView.ViewHolder(mHeaderContainer) {
+                        @Override
+                        public String toString() {
+                            return super.toString();
+                        }
+                    });
+
+                    mAdapter.addHeaderView(mExtraItem);
+                }
             }
-
-            if (mHeaderView != null) {
-                mHeaderContainer.addView(mHeaderView);
-            }
-
-            mHeaderHeight = mHeaderContainer.getHeight();
-            mRootView.addHeaderView(mHeaderContainer);
         }
     }
 
-    public void setAdapter(ListAdapter adapter) {
+    public void setAdapterAndLayoutManager(RecyclerView.Adapter adapter, GridLayoutManager mLayoutManager) {
+        mRootView.setLayoutManager(mLayoutManager);
         mRootView.setAdapter(adapter);
+        updateHeaderView();
     }
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-        mRootView.setOnItemClickListener(listener);
+//        mRootView.setOnItemClickListener(listener);
     }
 
+    /**
+     * 创建listView 如果要兼容API9,需要修改此处
+     *
+     * @param context 上下文
+     * @param attrs   AttributeSet
+     * @return ListView
+     */
     @Override
-    protected ListView createRootView(Context context, AttributeSet attrs) {
-        ListView lv = new ListView(context, attrs);
+    protected RecyclerView createRootView(Context context, AttributeSet attrs) {
+        RecyclerView rv = new RecyclerView(context, attrs);
         // Set it to this so it can be used in ListActivity/ListFragment
-        lv.setId(android.R.id.list);
-        return lv;
+
+//        rv.setId(android.R.id.list);
+        return rv;
     }
 
     /**
@@ -132,6 +208,11 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
         mScalingRunnable.startAnimation(200L);
     }
 
+    /**
+     * zoomView动画逻辑
+     *
+     * @param newScrollValue 手指Y轴移动距离值
+     */
     @Override
     protected void pullHeaderToZoom(int newScrollValue) {
         Log.d(TAG, "pullHeaderToZoom --> newScrollValue = " + newScrollValue);
@@ -151,22 +232,30 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
     }
 
     private boolean isFirstItemVisible() {
-        final Adapter adapter = mRootView.getAdapter();
+        if (mRootView != null) {
+            final RecyclerView.Adapter adapter = mRootView.getAdapter();
+            final GridLayoutManager mLayoutmanager = (GridLayoutManager) mRootView.getLayoutManager();
 
-        if (null == adapter || adapter.isEmpty()) {
-            return true;
-        } else {
-            /**
-             * This check should really just be:
-             * mRootView.getFirstVisiblePosition() == 0, but PtRListView
-             * internally use a HeaderView which messes the positions up. For
-             * now we'll just add one to account for it and rely on the inner
-             * condition which checks getTop().
-             */
-            if (mRootView.getFirstVisiblePosition() <= 1) {
-                final View firstVisibleChild = mRootView.getChildAt(0);
-                if (firstVisibleChild != null) {
-                    return firstVisibleChild.getTop() >= mRootView.getTop();
+
+            if (null == adapter || adapter.getItemCount() == 0) {
+                return true;
+            } else {
+                /**
+                 * This check should really just be:
+                 * mRootView.getFirstVisiblePosition() == 0, but PtRListView
+                 * internally use a HeaderView which messes the positions up. For
+                 * now we'll just add one to account for it and rely on the inner
+                 * condition which checks getTop().
+                 */
+
+                int[] into = {0,0};
+                if (mLayoutmanager != null)
+                    into[0] = mLayoutmanager.findFirstVisibleItemPosition();
+                if (into.length > 0 && into.length > 0 && into[0] <= 1) {
+                    final View firstVisibleChild = mRootView.getChildAt(0);
+                    if (firstVisibleChild != null) {
+                        return firstVisibleChild.getTop() >= mRootView.getTop();
+                    }
                 }
             }
         }
@@ -183,15 +272,24 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
         if (mHeaderView != null) {
             mHeaderContainer.addView(mHeaderView);
         }
+        RecyclerViewHeaderAdapter<RecyclerView.ViewHolder> mAdapter = (RecyclerViewHeaderAdapter<RecyclerView.ViewHolder>) mRootView.getAdapter();
+        if (mAdapter != null) {
+            RecyclerViewHeaderAdapter.ExtraItem mExtraItem = new RecyclerViewHeaderAdapter.ExtraItem(RecyclerViewHeaderAdapter.INT_TYPE_HEADER, new RecyclerView.ViewHolder(mHeaderContainer) {
+                @Override
+                public String toString() {
+                    return super.toString();
+                }
+            });
 
-        mRootView.addHeaderView(mHeaderContainer);
+            mAdapter.addHeaderView(mExtraItem);
+        }
     }
 
     /**
      * 设置HeaderView高度
      *
-     * @param width
-     * @param height
+     * @param width  宽
+     * @param height 高
      */
     public void setHeaderViewSize(int width, int height) {
         if (mHeaderContainer != null) {
@@ -267,7 +365,7 @@ public class PullToZoomListViewEx extends PullToZoomBase<ListView> implements Ab
                 ViewGroup.LayoutParams localLayoutParams;
                 if ((!mIsFinished) && (mScale > 1.0D)) {
                     float f1 = ((float) SystemClock.currentThreadTimeMillis() - (float) mStartTime) / (float) mDuration;
-                    f2 = mScale - (mScale - 1.0F) * PullToZoomListViewEx.sInterpolator.getInterpolation(f1);
+                    f2 = mScale - (mScale - 1.0F) * PullToZoomRecyclerViewEx.sInterpolator.getInterpolation(f1);
                     localLayoutParams = mHeaderContainer.getLayoutParams();
                     Log.d(TAG, "ScalingRunnable --> f2 = " + f2);
                     if (f2 > 1.0F) {

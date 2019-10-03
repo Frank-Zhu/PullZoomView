@@ -87,7 +87,7 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
                 mHeaderView = mLayoutInflater.inflate(headerViewResId, null, false);
             }
 
-            isParallax = a.getBoolean(R.styleable.PullToZoomListView_isHeadParallax, true);
+            isParallax = a.getBoolean(R.styleable.PullToZoomView_isHeaderParallax, true);
 
             // Let the derivative classes have a go at handling attributes, then
             // recycle them...
@@ -102,7 +102,7 @@ public abstract class PullToZoomBase<T extends View> extends LinearLayout implem
     }
 
     @Override
-    public T getRootView() {
+    public T getPullRootView() {
         return mRootView;
     }
 

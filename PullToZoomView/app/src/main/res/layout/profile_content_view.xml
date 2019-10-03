@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,34 +9,36 @@
         android:id="@+id/tv_test1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
         android:gravity="center_vertical"
-        android:textSize="20sp"
-        android:text="test1" />
+        android:padding="20dp"
+        android:text="test1"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_test2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="20dp"
+        android:text="test1"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_test3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="20dp"
+        android:text="test1"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
         android:gravity="center_vertical"
-        android:textSize="20sp"
-        android:text="test1" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:padding="20dp"
-        android:textSize="20sp"
-        android:gravity="center_vertical"
-        android:text="test1" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
-        android:gravity="center_vertical"
-        android:text="test1" />
+        android:text="test1"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -47,34 +48,34 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test2" />
+        android:padding="20dp"
+        android:text="test2"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test2" />
+        android:padding="20dp"
+        android:text="test2"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test2" />
+        android:padding="20dp"
+        android:text="test2"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test2" />
+        android:padding="20dp"
+        android:text="test2"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -84,34 +85,34 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test3" />
+        android:padding="20dp"
+        android:text="test3"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test3" />
+        android:padding="20dp"
+        android:text="test3"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test3" />
+        android:padding="20dp"
+        android:text="test3"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test3" />
+        android:padding="20dp"
+        android:text="test3"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -121,34 +122,34 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test4" />
+        android:padding="20dp"
+        android:text="test4"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test4" />
+        android:padding="20dp"
+        android:text="test4"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test4" />
+        android:padding="20dp"
+        android:text="test4"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test4" />
+        android:padding="20dp"
+        android:text="test4"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -158,32 +159,32 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test5" />
+        android:padding="20dp"
+        android:text="test5"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test5" />
+        android:padding="20dp"
+        android:text="test5"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test5" />
+        android:padding="20dp"
+        android:text="test5"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="test5" />
+        android:padding="20dp"
+        android:text="test5"
+        android:textSize="20sp" />
 </LinearLayout>
