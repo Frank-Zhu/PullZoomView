@@ -7,11 +7,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 
 import com.ecloud.pulltozoomview.PullToZoomListViewEx;
 
@@ -44,12 +42,12 @@ public class PullToZoomListActivity extends ActionBarActivity {
                 "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient"};
 
         listView.setAdapter(new ArrayAdapter<String>(PullToZoomListActivity.this, android.R.layout.simple_list_item_1, adapterData));
-//        listView.getRootView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.e("zhuwenwu", "position = " + position);
-//            }
-//        });
+        listView.getPullRootView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("zhuwenwu", "position = " + position);
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
