@@ -14,16 +14,24 @@ Features
 
 Usage
 ============
-### 1. Add PullZoomView to your project
-####Maven
 
-####Eclipse
-1. Download ZIP then extract the PullZoomView project
-1. From Eclipse menu: New > Android Project from Existing Code > PullZoomView project > Finish
-1. Right click on your project
-1. Android > Library: Add > PullZoomView
+In your `build.gradle`:
 
-### 2.Reference the sample app
+```gradle
+ dependencies {
+   compile 'com.github.frank-zhu:pullzoomview:1.0.0'
+ }
+```
+or Maven:
+
+```xml
+<dependency>
+  <groupId>com.github.frank-zhu</groupId>
+  <artifactId>pullzoomview</artifactId>
+  <version>1.0.0</version>
+  <type>aar</type>
+</dependency>
+```
 
 Using this library?
 ============
@@ -42,7 +50,7 @@ Developers @matrixxun
 
 About me
 ============
-[Click Me](http://frank-zhu.github.io/about.html)
+[Click Me](http://frank-zhu.github.io/about/)
 
 License
 ============

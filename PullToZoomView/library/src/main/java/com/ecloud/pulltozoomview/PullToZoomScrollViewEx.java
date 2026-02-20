@@ -26,7 +26,7 @@ import android.widget.ScrollView;
  */
 public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
     private static final String TAG = PullToZoomScrollViewEx.class.getSimpleName();
-    private boolean isCustomHeaderHeight = false;//自定义header高度之后可能导致zoomView拉伸不正确
+    private boolean isCustomHeaderHeight = false;
     private FrameLayout mHeaderContainer;
     private LinearLayout mRootContainer;
     private View mContentView;
@@ -103,30 +103,49 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
 
     @Override
     public void setHeaderView(View headerView) {
-        if (mHeaderContainer != null && headerView != null) {
-            mHeaderContainer.removeAllViews();
+        if (headerView != null) {
             mHeaderView = headerView;
-            if (mZoomView != null) {
-                mHeaderContainer.addView(mZoomView);
-            }
-            mHeaderContainer.addView(mHeaderView);
+            updateHeaderView();
         }
     }
 
     @Override
     public void setZoomView(View zoomView) {
-        if (mHeaderContainer != null && zoomView != null) {
+        if (zoomView != null) {
+            mZoomView = zoomView;
+            updateHeaderView();
+        }
+    }
+
+    private void updateHeaderView() {
+        if (mHeaderContainer != null) {
             mHeaderContainer.removeAllViews();
-            mHeaderContainer.addView(mZoomView);
+
+            if (mZoomView != null) {
+                mHeaderContainer.addView(mZoomView);
+            }
+
             if (mHeaderView != null) {
                 mHeaderContainer.addView(mHeaderView);
             }
         }
     }
 
+    public void setScrollContentView(View contentView) {
+        if (contentView != null) {
+            if (mContentView != null) {
+                mRootContainer.removeView(mContentView);
+            }
+            mContentView = contentView;
+            mRootContainer.addView(mContentView);
+        }
+    }
+
     @Override
     protected ScrollView createRootView(Context context, AttributeSet attrs) {
-        return new InternalScrollView(context, attrs);
+        ScrollView scrollView = new InternalScrollView(context, attrs);
+        scrollView.setId(R.id.scrollview);
+        return scrollView;
     }
 
     @Override
@@ -152,7 +171,7 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
         if (mHeaderView != null) {
             mHeaderContainer.addView(mHeaderView);
         }
-        int contentViewResId = a.getResourceId(R.styleable.PullToZoomScrollView_scrollContentView, 0);
+        int contentViewResId = a.getResourceId(R.styleable.PullToZoomView_contentView, 0);
         if (contentViewResId > 0) {
             LayoutInflater mLayoutInflater = LayoutInflater.from(getContext());
             mContentView = mLayoutInflater.inflate(contentViewResId, null, false);
@@ -172,8 +191,8 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
     /**
      * 设置HeaderView高度
      *
-     * @param width  宽
-     * @param height 高
+     * @param width
+     * @param height
      */
     public void setHeaderViewSize(int width, int height) {
         if (mHeaderContainer != null) {
